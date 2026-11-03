@@ -1,0 +1,9 @@
+{
+  "name": "nexa-web-p2p",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NEXA decentralized WebRTC messaging PWA",
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "NEXA — Direct Messaging",
+  "short_name": "NEXA",
+  "description": "مراسلة مباشرة بين الأجهزة عبر WebRTC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

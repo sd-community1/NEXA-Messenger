@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="description" content="NEXA — مراسلة مباشرة بين الأجهزة عبر WebRTC">
+  <title>NEXA — مراسلة مباشرة</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="NEXA home">
+        <span class="brand-mark">N</span><span>NEXA</span>
+      </a>
+      <div class="top-actions">
+        <span id="networkBadge" class="status-pill"><i></i> غير متصل</span>
+        <button id="installBtn" class="icon-btn hidden" title="تثبيت التطبيق" aria-label="تثبيت التطبيق">↓</button>
+        <button id="settingsBtn" class="icon-btn" title="الإعدادات" aria-label="الإعدادات">⚙</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="homeView" class="view active">
+        <div class="hero">
+          <div class="eyebrow">PRIVATE · DIRECT · SIMPLE</div>
+          <h1>محادثاتك، <span>مباشرة.</span></h1>
+          <p>اتصال مباشر بين جهازين. لا حسابات مركزية، ولا تخزين سحابي للرسائل.</p>
+        </div>
+
+        <section class="panel profile-panel">
+          <div class="section-heading"><div><span class="eyebrow">ملفك المحلي</span><h2>هويتك على هذا الجهاز</h2></div><span class="avatar">N</span></div>
+          <label class="field-label" for="displayName">الاسم الظاهر</label>
+          <div class="inline-field"><input id="displayName" maxlength="32" placeholder="اكتب اسمك"><button id="saveNameBtn" class="small-btn">حفظ</button></div>
+          <p class="muted small">الاسم محفوظ على جهازك فقط، ولا يمثل حساباً مركزياً.</p>
+        </section>
+
+        <section class="actions-grid">
+          <button id="createBtn" class="action-card primary-card">
+            <span class="action-icon">↗</span><strong>إنشاء دعوة</strong><span>ابدأ اتصالاً وشارك الرمز مع صديقك</span>
+          </button>
+          <button id="joinBtn" class="action-card">
+            <span class="action-icon">⌁</span><strong>الانضمام إلى محادثة</strong><span>أدخل رمز الدعوة الذي وصلك</span>
+          </button>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading"><div><span class="eyebrow">LOCAL ONLY</span><h2>المحادثات الأخيرة</h2></div><span id="chatCount" class="count">0</span></div>
+          <div id="chatList" class="chat-list">
+            <div class="empty-state"><div class="empty-symbol">◌</div><strong>لا توجد محادثات بعد</strong><span>أنشئ دعوة أو انضم إلى محادثة للبدء.</span></div>
+          </div>
+        </section>
+      </section>
+
+      <section id="chatView" class="view">
+        <div class="chat-header">
+          <button id="backBtn" class="icon-btn" aria-label="رجوع">→</button>
+          <div class="peer-avatar">P</div>
+          <div class="peer-meta"><strong id="peerName">محادثة مباشرة</strong><span id="peerStatus">جارٍ الاتصال...</span></div>
+          <button id="chatInfoBtn" class="icon-btn" title="معلومات الاتصال">ⓘ</button>
+        </div>
+        <div id="messages" class="messages">
+          <div class="system-note">بدأت هذه المحادثة باتصال مباشر. لا تُرسل الرسائل إلى خادم NEXA.</div>
+        </div>
+        <form id="messageForm" class="composer">
+          <input id="messageInput" autocomplete="off" maxlength="4000" placeholder="اكتب رسالة..." aria-label="اكتب رسالة">
+          <button id="sendBtn" type="submit" aria-label="إرسال" disabled>↑</button>
+        </form>
+        <div class="composer-foot"><span id="deliveryHint">تأكد من بقاء الطرفين متصلين.</span><span>WEBRTC P2P</span></div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="page-heading"><button id="settingsBackBtn" class="icon-btn">→</button><div><span class="eyebrow">PREFERENCES</span><h1>الإعدادات</h1></div></div>
+        <section class="panel settings-panel">
+          <h2>الاتصال</h2>
+          <label class="field-label" for="stunUrl">خادم STUN</label>
+          <input id="stunUrl" dir="ltr" value="stun:stun.l.google.com:19302">
+          <p class="muted small">يُستخدم لاكتشاف مسارات الاتصال فقط. لا ينقل الرسائل.</p>
+          <button id="saveStunBtn" class="outline-btn">حفظ إعداد STUN</button>
+          <div class="divider"></div>
+          <h2>الخصوصية والبيانات</h2>
+          <p class="muted">تُحفظ أسماء المحادثات وسجل الرسائل محلياً في متصفح هذا الجهاز. بيانات الإشارات (SDP) تُحفظ مؤقتاً في Upstash حتى 10 دقائق لإتمام الاتصال.</p>
+          <button id="clearDataBtn" class="danger-btn">مسح بيانات هذا الجهاز</button>
+        </section>
+        <section class="panel">
+          <span class="eyebrow">ABOUT NEXA</span><h2>مراسلة مباشرة بتصميم بسيط</h2>
+          <p class="muted small">الإصدار التجريبي 0.1 · WebRTC Data Channels · PWA</p>
+        </section>
+      </section>
+    </main>
+    <footer class="app-footer"><span>NEXA</span><span>اتصال مباشر، دون وسيط للرسائل</span></footer>
+  </div>
+
+  <dialog id="inviteDialog" class="dialog">
+    <form method="dialog" class="dialog-card">
+      <button class="dialog-close" value="cancel" aria-label="إغلاق">×</button>
+      <span class="eyebrow">NEW CONNECTION</span>
+      <h2>دعوة للاتصال</h2>
+      <p class="muted">أبقِ هذه الصفحة مفتوحة وشارك رمز الدعوة مع الطرف الآخر.</p>
+      <div id="roomCode" class="room-code">••••••••</div>
+      <button id="copyRoomBtn" type="button" class="primary-btn">نسخ رمز الدعوة</button>
+      <div class="waiting"><span class="spinner"></span><span id="inviteStatus">بانتظار الطرف الآخر...</span></div>
+      <p class="tiny muted">الرمز مؤقت وصالح لمدة 10 دقائق. لا تشارك الرمز مع أشخاص لا تثق بهم.</p>
+    </form>
+  </dialog>
+
+  <dialog id="joinDialog" class="dialog">
+    <form id="joinForm" class="dialog-card">
+      <button id="joinCloseBtn" type="button" class="dialog-close">×</button>
+      <span class="eyebrow">JOIN CONNECTION</span>
+      <h2>الانضمام إلى محادثة</h2>
+      <p class="muted">أدخل رمز الدعوة الذي شاركه معك الطرف الآخر.</p>
+      <label class="field-label" for="joinCode">رمز الدعوة</label>
+      <input id="joinCode" class="code-input" dir="ltr" autocomplete="off" maxlength="24" placeholder="مثال: A1B2C3D4">
+      <button class="primary-btn" type="submit">الاتصال</button>
+      <p id="joinError" class="error-text"></p>
+    </form>
+  </dialog>
+
+  <dialog id="infoDialog" class="dialog">
+    <form method="dialog" class="dialog-card">
+      <button class="dialog-close" value="close">×</button>
+      <span class="eyebrow">CONNECTION DETAILS</span><h2>تفاصيل الاتصال</h2>
+      <div class="info-row"><span>الحالة</span><strong id="infoState">—</strong></div>
+      <div class="info-row"><span>نوع الاتصال</span><strong>WebRTC Data Channel</strong></div>
+      <div class="info-row"><span>الإشارات</span><strong>Vercel + Upstash (مؤقتاً)</strong></div>
+      <p class="muted small">يتم نقل الرسائل مباشرة بعد إنشاء الاتصال. قد تفشل بعض الشبكات في الاتصال المباشر دون TURN.</p>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
